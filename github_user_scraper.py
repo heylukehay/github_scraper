@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from bs4 import BeautifulSoup
 import requests
 
-base_url = "https://github.com"
+base_url = "github.com"
 
 def scrape_user(username):
     """
@@ -15,7 +15,7 @@ def scrape_user(username):
         dict: A dictionary containing user data.
     """
     # URL for the GitHub user profile
-    html_url = f"{base_url}/{username}"
+    html_url = f"https://{base_url}/{username}"
     # Send a GET request to the URL
     page = requests.get(html_url)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -104,7 +104,7 @@ def extract_follow_string(soup, username, follow_type):
     Returns:
         str: Follower/following count as a string.
     """
-    follow_element = soup.find("a", href=f"{base_url}/{username}?tab={follow_type}")
+    follow_element = soup.find("a", href=f"https://{base_url}/{username}?tab={follow_type}")
     if follow_element:
         return follow_element.text.replace(follow_type, "").replace("follower", "").strip()
     return None
